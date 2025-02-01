@@ -1,0 +1,96 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc), url('https://source.unsplash.com/1600x900/?math,education');
+    background-blend-mode: overlay;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(0.95);
+    animation: popUp 0.8s ease-out forwards;
+}
+
+@keyframes popUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+h1, h2 {
+    color: #222;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+input, select {
+    width: 85%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+input:focus, select:focus {
+    border-color: #0056b3;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 91, 187, 0.5);
+}
+
+button {
+    padding: 12px 25px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 15px;
+}
+
+button:hover {
+    background: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 91, 187, 0.3);
+}
+
+p, ul {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 8px 0;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+ul li:hover {
+    color: #007bff;
+    transform: scale(1.05);
+}
