@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Web App</title>
+    <title>Math Utility Web App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <marquee id="marquee" behavior="scroll" direction="left">Welcome to Math World</marquee>
+
     <div class="container">
-        <h1>Math Web App</h1>
+        <h1>Math Utility Web App</h1>
         
         <h2>Basic Calculator</h2>
         <input type="text" id="calcExpression" placeholder="Enter expression (e.g., 5+3*2)">
@@ -21,7 +23,12 @@
         <p id="conversionResult"></p>
         
         <h2>Math Problem Solver</h2>
-        <input type="text" id="expression" placeholder="Enter math problem (e.g., solve 5-3+2+3)">
+        <p>Enter a quadratic or cubic equation to solve:</p>
+        <ul>
+            <li>For quadratic equations (ax² + bx + c = 0), type: <strong>solve quadratic a b c</strong></li>
+            <li>For cubic equations (ax³ + bx² + cx + d = 0), type: <strong>solve cubic a b c d</strong></li>
+        </ul>
+        <input type="text" id="expression" placeholder="Enter math problem (e.g., solve quadratic 1 -3 2)">
         <button onclick="evaluateExpression()">Solve</button>
         <p id="result"></p>
         
