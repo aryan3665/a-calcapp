@@ -4,22 +4,219 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Utility Web App</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        :root {
+            --primary-color: #FF6347;
+            --secondary-color: #FF8C00;
+            --accent-color: #FFA500;
+            --text-color: #333;
+            --bg-gradient: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient) fixed;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Announcement Bar */
+        .announcement-bar {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 0.8rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Header Styles */
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin: 2rem 0 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Form Elements */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, select {
+            width: 90%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 0.8rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fff;
+            margin: 0.5rem 0;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.2);
+            outline: none;
+        }
+
+        /* Buttons */
+        button {
+            background: var(--bg-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.8rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 99, 71, 0.3);
+        }
+
+        /* Results and Output */
+        #result, #calcResult, #conversionResult {
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: #f8f9fa;
+            border-radius: 0.8rem;
+            font-size: 1.1rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Formula List */
+        #formulaList {
+            display: grid;
+            gap: 1rem;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 0.8rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        #formulaList li {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease;
+            list-style: none;
+        }
+
+        #formulaList li:hover {
+            transform: translateX(5px);
+            background: linear-gradient(90deg, #fff5f5, #ffffff);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .input-group {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            input, select {
+                font-size: 0.9rem;
+                padding: 0.8rem 1rem;
+            }
+
+            #formulaList {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <marquee id="marquee" behavior="scroll" direction="left">Welcome to Math World</marquee>
+    <div class="announcement-bar">
+        Welcome to Math World - Your Ultimate Mathematics Companion
+    </div>
 
     <div class="container">
         <h1>Math Utility Web App</h1>
         
         <h2>Basic Calculator</h2>
-        <input type="text" id="calcExpression" placeholder="Enter expression (e.g., 5+3*2)">
-        <button onclick="calculate()">Calculate</button>
+        <div class="input-group">
+            <input type="text" id="calcExpression" placeholder="Enter expression (e.g., 5+3*2)">
+            <button onclick="calculate()">Calculate</button>
+        </div>
         <p id="calcResult"></p>
         
         <h2>Number Conversion</h2>
-        <input type="number" id="number" placeholder="Enter a number">
-        <button onclick="convertNumber()">Convert</button>
+        <div class="input-group">
+            <input type="number" id="number" placeholder="Enter a number">
+            <button onclick="convertNumber()">Convert</button>
+        </div>
         <p id="conversionResult"></p>
         
         <h2>Math Problem Solver</h2>
@@ -28,21 +225,196 @@
             <li>For quadratic equations (ax² + bx + c = 0), type: <strong>solve quadratic a b c</strong></li>
             <li>For cubic equations (ax³ + bx² + cx + d = 0), type: <strong>solve cubic a b c d</strong></li>
         </ul>
-        <input type="text" id="expression" placeholder="Enter math problem (e.g., solve quadratic 1 -3 2)">
-        <button onclick="evaluateExpression()">Solve</button>
+        <div class="input-group">
+            <input type="text" id="expression" placeholder="Enter math problem (e.g., solve quadratic 1 -3 2)">
+            <button onclick="evaluateExpression()">Solve</button>
+        </div>
         <p id="result"></p>
         
         <h2>Math Formulas</h2>
-        <select id="chapter">
-            <option value="algebra">Algebra</option>
-            <option value="geometry">Geometry</option>
-            <option value="trigonometry">Trigonometry</option>
-            <option value="mensuration">Mensuration</option>
-        </select>
-        <button onclick="getFormulas()">Get Formulas</button>
+        <div class="input-group">
+            <select id="chapter">
+                <option value="algebra">Algebra</option>
+                <option value="geometry">Geometry</option>
+                <option value="trigonometry">Trigonometry</option>
+                <option value="mensuration">Mensuration</option>
+            </select>
+            <button onclick="getFormulas()">Get Formulas</button>
+        </div>
         <ul id="formulaList"></ul>
     </div>
-    
-    <script src="script.js"></script>
+
+    <script>
+        // JavaScript code from original remains the same
+        // Basic Calculator Function
+        function calculate() {
+            let expression = document.getElementById("calcExpression").value;
+            try {
+                document.getElementById("calcResult").innerText = "Result: " + eval(expression);
+            } catch {
+                document.getElementById("calcResult").innerText = "Invalid Expression";
+            }
+        }
+
+        // Number Conversion Function
+        function convertNumber() {
+            let num = parseInt(document.getElementById("number").value);
+            if (isNaN(num)) {
+                document.getElementById("conversionResult").innerText = "Enter a valid number";
+                return;
+            }
+
+            let roman = toRoman(num);
+            let binary = num.toString(2);
+            let octal = num.toString(8);
+            let hexa = num.toString(16).toUpperCase();
+
+            document.getElementById("conversionResult").innerText = 
+                `Roman: ${roman}, Binary: ${binary}, Octal: ${octal}, Hexadecimal: ${hexa}`;
+        }
+
+        // Convert to Roman Numerals
+        function toRoman(num) {
+            let val = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            let syb = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+            let roman = "";
+            for (let i = 0; i < val.length; i++) {
+                while (num >= val[i]) {
+                    roman += syb[i];
+                    num -= val[i];
+                }
+            }
+            return roman;
+        }
+
+        // Math Problem Solver
+        function evaluateExpression() {
+            let input = document.getElementById("expression").value;
+            if (input.startsWith("solve quadratic")) {
+                let coefficients = input.slice(16).split(" ");
+                if (coefficients.length === 3) {
+                    let a = parseFloat(coefficients[0]);
+                    let b = parseFloat(coefficients[1]);
+                    let c = parseFloat(coefficients[2]);
+                    solveQuadratic(a, b, c);
+                } else {
+                    document.getElementById("result").innerText = "Invalid input. Please enter three coefficients.";
+                }
+            } else if (input.startsWith("solve cubic")) {
+                let coefficients = input.slice(12).split(" ");
+                if (coefficients.length === 4) {
+                    let a = parseFloat(coefficients[0]);
+                    let b = parseFloat(coefficients[1]);
+                    let c = parseFloat(coefficients[2]);
+                    let d = parseFloat(coefficients[3]);
+                    solveCubic(a, b, c, d);
+                } else {
+                    document.getElementById("result").innerText = "Invalid input. Please enter four coefficients.";
+                }
+            } else {
+                document.getElementById("result").innerText = "Please use 'solve quadratic' or 'solve cubic' followed by the coefficients.";
+            }
+        }
+
+        // Solve Quadratic Equation: ax² + bx + c = 0
+        function solveQuadratic(a, b, c) {
+            let discriminant = b * b - 4 * a * c;
+            if (discriminant > 0) {
+                let root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+                let root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+                document.getElementById("result").innerText = `Roots: ${root1.toFixed(2)}, ${root2.toFixed(2)}`;
+            } else if (discriminant === 0) {
+                let root = -b / (2 * a);
+                document.getElementById("result").innerText = `Root: ${root.toFixed(2)}`;
+            } else {
+                document.getElementById("result").innerText = "No real roots.";
+            }
+        }
+
+        // Solve Cubic Equation: ax³ + bx² + cx + d = 0
+        function solveCubic(a, b, c, d) {
+            // Simplified implementation for demonstration
+            let roots = [];
+            for (let x = -100; x <= 100; x++) {
+                let y = a*x*x*x + b*x*x + c*x + d;
+                if (Math.abs(y) < 0.001) {
+                    roots.push(x);
+                }
+            }
+            if (roots.length > 0) {
+                document.getElementById("result").innerText = `Real roots: ${roots.join(', ')}`;
+            } else {
+                document.getElementById("result").innerText = "No real roots found in range [-100, 100]";
+            }
+        }
+
+        // Math Formulas Collection
+        const formulas = {
+            "algebra": [
+                "Quadratic Formula: x = (-b ± √(b² - 4ac)) / 2a",
+                "Sum of n natural numbers: n(n+1)/2",
+                "Sum of first n even numbers: n(n+1)",
+                "Sum of first n odd numbers: n²",
+                "Binomial Theorem: (a+b)^n = Σ(nCk * a^(n-k) * b^k)",
+                "Arithmetic Sequence: a_n = a + (n-1)d",
+                "Geometric Sequence: a_n = a * r^(n-1)",
+                "Logarithm Property: log(ab) = log a + log b",
+                "Difference of Squares: a² - b² = (a-b)(a+b)",
+                "Cubic Expansion: (a+b)^3 = a³ + 3a²b + 3ab² + b³"
+            ],
+            "geometry": [
+                "Area of a Triangle: ½ × base × height",
+                "Area of a Circle: πr²",
+                "Circumference of a Circle: 2πr",
+                "Pythagoras Theorem: a² + b² = c²",
+                "Volume of a Cylinder: πr²h",
+                "Surface Area of Sphere: 4πr²",
+                "Volume of Sphere: (4/3)πr³",
+                "Area of Trapezium: ½ × (a + b) × h",
+                "Angle Sum of Polygon: (n-2) × 180°",
+                "Exterior Angle of a Regular Polygon: 360° / n"
+            ],
+            "trigonometry": [
+                "sin²θ + cos²θ = 1",
+                "tanθ = sinθ / cosθ",
+                "cos(90°-θ) = sinθ",
+                "sin(90°-θ) = cosθ",
+                "sec²θ - tan²θ = 1",
+                "cosec²θ - cot²θ = 1",
+                "sin(A+B) = sinA cosB + cosA sinB",
+                "cos(A+B) = cosA cosB - sinA sinB",
+                "tan(A+B) = (tanA + tanB) / (1 - tanA tanB)",
+                "Law of Sines: a/sinA = b/sinB = c/sinC"
+            ],
+            "mensuration": [
+                "Volume of a Cone: (1/3)πr²h",
+                "Surface Area of a Cube: 6a²",
+                "Volume of a Cube: a³",
+                "Lateral Surface Area of Cylinder: 2πrh",
+                "Total Surface Area of Cylinder: 2πr(r+h)",
+                "Area of a Rhombus: ½ × d1 × d2",
+                "Surface Area of a Hemisphere: 3πr²",
+                "Volume of a Hemisphere: (2/3)πr³",
+                "Frustum Volume: (1/3)πh(R² + r² + Rr)",
+                "Heron's Formula: A = √[s(s-a)(s-b)(s-c)]"
+            ]
+        };
+
+        function getFormulas() {
+            let chapter = document.getElementById("chapter").value.toLowerCase();
+            let formulaList = document.getElementById("formulaList");
+            formulaList.innerHTML = "";
+
+            if (formulas[chapter]) {
+                formulas[chapter].forEach(formula => {
+                    let li = document.createElement("li");
+                    li.textContent = formula;
+                    formulaList.appendChild(li);
+                });
+            } else {
+                formulaList.innerHTML = "<li>No formulas found for this chapter</li>";
+            }
+        }
+    </script>
 </body>
 </html>
